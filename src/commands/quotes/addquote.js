@@ -17,7 +17,12 @@ module.exports = {
     const setName = args.shift();
     const quote = args.join(' ');
 
-    dbClient.addQuote(this.serverDb, setName, quote);
-    message.channel.send(`Quote added to set \`${setName}\``);
+    if (dbClient.getQuoteSet(this.serverDb, setName)) {
+      dbClient.addQuote(this.serverDb, setName, quote);
+      message.channel.send(`Quote added to set \`${setName}\``);
+    }
+    else {
+      message.channel.send(`Quote set \`${setName}\` does not exist`);
+    }
   },
 };

@@ -16,27 +16,33 @@ module.exports = {
     }
 
     const setName = args.shift();
-    if (args[0].match(/^\d+$/)) {
-      // if second arg is a number
-      const index = +args.shift() - 1;
-      if (index >= dbClient.getQuoteSet(this.serverDb, setName).length) {
-        message.channel.send(`Quote \`${index}\` does not exist`);
-        return;
+
+    if (dbClient.getQuoteSet(this.serverDb, setName)) {
+      if (args[0].match(/^\d+$/)) {
+        // if second arg is a number
+        const index = +args.shift() - 1;
+        if (index >= dbClient.getQuoteSet(this.serverDb, setName).length) {
+          message.channel.send(`Quote \`${index}\` does not exist`);
+          return;
+        }
+        logger.info(`Deleting quote index ${index} from set "${setName}"`);
+        dbClient.removeQuoteByIndex(this.serverDb, setName, index);
       }
-      logger.info(`Deleting quote index ${index} from set "${setName}"`);
-      dbClient.removeQuoteByIndex(this.serverDb, setName, index);
+      else {
+        const quote = args.join(' ');
+
+        if (!dbClient.getQuoteSet(this.serverDb, setName).includes(quote)) {
+          message.channel.send(`Quote "${quote}" does not exist`);
+          return;
+        }
+
+        logger.info(`Deleting quote index ${quote} from set "${setName}"`);
+        dbClient.removeQuote(this.serverDb, setName, quote);
+      }
+      message.channel.send(`Quote removed from set \`${setName}\``);
     }
     else {
-      const quote = args.join(' ');
-
-      if (!dbClient.getQuoteSet(this.serverDb, setName).includes(quote)) {
-        message.channel.send(`Quote "${quote}" does not exist`);
-        return;
-      }
-
-      logger.info(`Deleting quote index ${quote} from set "${setName}"`);
-      dbClient.removeQuote(this.serverDb, setName, quote);
+      message.channel.send(`Quote set \`${setName}\` does not exist`);
     }
-    message.channel.send(`Quote removed from set \`${setName}\``);
   },
 };
