@@ -1,6 +1,6 @@
 # Quote Bot
 
-This is a simple quote bot built for one of my servers. Yes I know there's many Discord quote bots out there but I wanted some extra features and the fun of building it myself.
+This is a simple quote bot built for one of my servers. Yes I know there's many Discord quote bots out there (such as [this one](https://top.gg/bot/379985883522138112)) but I wanted some extra features and the fun of building it myself.
 
 ## Features
 
