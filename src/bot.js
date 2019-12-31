@@ -137,9 +137,6 @@ client.on('message', (message) => {
           message.channel.send(`"${quote}" - ${sourceSet}`);
           client.cooldowns.set(guild.id, now);
         }
-        else {
-          message.channel.send('on cooldown');
-        }
       }
     }
   }
