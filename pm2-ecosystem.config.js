@@ -10,7 +10,7 @@ module.exports = {
     wait_ready: true,
     listen_timeout: 10000,
     max_restarts: 10,
-    max_memory_restart: '50M',
+    max_memory_restart: '100M',
     log_file: 'quote-bot.log',
     merge_logs: true,
     env: {
